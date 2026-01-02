@@ -35,7 +35,13 @@ $busqueda = htmlspecialchars($_GET['busqueda'] ?? '', ENT_QUOTES, 'UTF-8');
                 <i class="bi bi-search"></i>
             </button>
         </form>
-        <a href="login.php" aria-label="Iniciar sesión"><i class="bi bi-person"></i></a>
+        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['rol']) && $_SESSION['rol'] === 'cliente'): ?>
+            <a href="logout.php" aria-label="Cerrar sesión" title="Cerrar sesión">
+                <i class="bi bi-person-check"></i> <?= htmlspecialchars($_SESSION['user'] ?? 'Usuario') ?>
+            </a>
+        <?php else: ?>
+            <a href="login-user.php" aria-label="Iniciar sesión"><i class="bi bi-person"></i></a>
+        <?php endif; ?>
         <a href="carrito.php" class="cart-link" aria-label="Ver carrito">
             <i class="bi bi-bag"></i>
             <?php if ($carritoCount > 0): ?>

@@ -73,14 +73,30 @@ $view = $_GET['view'] ?? 'dashboard';
                 // Promedio de venta
                 $promedioVenta = $totalPedidos > 0 ? ($totalVentas / $totalPedidos) : 0;
                 
-                // Ventas del mes actual
+                // Ventas del mes actual (usando prepared statement para seguridad)
                 $mesActual = date('Y-m');
-                $resultVentasMes = $conn->query("SELECT SUM(total) as total FROM ordenes WHERE estado = 'pagado' AND DATE_FORMAT(created_at, '%Y-%m') = '$mesActual'");
-                $ventasMes = $resultVentasMes && $resultVentasMes->num_rows > 0 ? ($resultVentasMes->fetch_assoc()['total'] ?? 0) : 0;
+                $stmtVentasMes = $conn->prepare("SELECT SUM(total) as total FROM ordenes WHERE estado = 'pagado' AND DATE_FORMAT(created_at, '%Y-%m') = ?");
+                if ($stmtVentasMes) {
+                    $stmtVentasMes->bind_param("s", $mesActual);
+                    $stmtVentasMes->execute();
+                    $resultVentasMes = $stmtVentasMes->get_result();
+                    $ventasMes = $resultVentasMes && $resultVentasMes->num_rows > 0 ? ($resultVentasMes->fetch_assoc()['total'] ?? 0) : 0;
+                    $stmtVentasMes->close();
+                } else {
+                    $ventasMes = 0;
+                }
                 
-                // Pedidos del mes actual
-                $resultPedidosMes = $conn->query("SELECT COUNT(*) as total FROM ordenes WHERE estado = 'pagado' AND DATE_FORMAT(created_at, '%Y-%m') = '$mesActual'");
-                $pedidosMes = $resultPedidosMes && $resultPedidosMes->num_rows > 0 ? ($resultPedidosMes->fetch_assoc()['total'] ?? 0) : 0;
+                // Pedidos del mes actual (usando prepared statement para seguridad)
+                $stmtPedidosMes = $conn->prepare("SELECT COUNT(*) as total FROM ordenes WHERE estado = 'pagado' AND DATE_FORMAT(created_at, '%Y-%m') = ?");
+                if ($stmtPedidosMes) {
+                    $stmtPedidosMes->bind_param("s", $mesActual);
+                    $stmtPedidosMes->execute();
+                    $resultPedidosMes = $stmtPedidosMes->get_result();
+                    $pedidosMes = $resultPedidosMes && $resultPedidosMes->num_rows > 0 ? ($resultPedidosMes->fetch_assoc()['total'] ?? 0) : 0;
+                    $stmtPedidosMes->close();
+                } else {
+                    $pedidosMes = 0;
+                }
                 
                 // Ventas recientes (últimas 5)
                 $ventasRecientesQuery = $conn->query("SELECT o.id, o.total, o.estado, o.created_at, c.nombre as cliente_nombre 

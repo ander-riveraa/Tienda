@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
         .login-container { display: flex; min-height: 100vh; }
-        .login-left { flex: 1; background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); display: flex; align-items: center; justify-content: center; padding: 40px; }
+        .login-left { flex: 1; background: linear-gradient(135deg, #f5f5f5 0%, #e5e7eb 100%); display: flex; align-items: center; justify-content: center; padding: 40px; }
         .login-logo { text-align: center; }
         .login-logo h1 { font-size: 72px; font-weight: 300; letter-spacing: -2px; color: #1f2937; margin-bottom: 8px; }
         .login-logo p { font-size: 12px; letter-spacing: 2px; color: #6b7280; text-transform: uppercase; }
@@ -44,12 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-group input:focus { outline: none; border-color: #111827; }
         .form-group input::placeholder { color: #d1d5db; }
         .form-options { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 13px; }
-        .form-options a { color: #ec4899; text-decoration: none; }
+        .form-options a { color: #111; text-decoration: none; }
         .form-options a:hover { text-decoration: underline; }
         .checkbox { display: flex; align-items: center; gap: 6px; }
         .checkbox input { width: 16px; height: 16px; cursor: pointer; }
-        .error { color: #dc2626; font-size: 13px; margin-bottom: 16px; }
-        .btn-login { width: 100%; padding: 12px; background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: transform 0.2s; }
+        .error { color: #111; font-size: 13px; margin-bottom: 16px; background:#f3f4f6; padding:8px 12px; border-radius:6px; }
+        .btn-login { width: 100%; padding: 12px; background: #111; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; letter-spacing: 1px; cursor: pointer; transition: transform 0.2s; }
         .btn-login:hover { transform: translateY(-2px); }
         .login-divider { text-align: center; margin: 24px 0; font-size: 13px; color: #d1d5db; }
         .login-divider::before, .login-divider::after { content: ''; display: inline-block; width: 40%; height: 1px; background: #e5e7eb; vertical-align: middle; }
